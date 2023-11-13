@@ -15,10 +15,10 @@ export default function WelcomeComponent()
     {
         console.log('called')
 
-        axios.get('http://localhost:8080/hello-world')
-            .then((response)=> successfulResponse(response))
-            .catch((error)=> errorResponse(error))
-            .finally(()=>console.log('cleanup'))
+        // axios.get('http://localhost:8080/hello-world')
+        //     .then((response)=> successfulResponse(response))
+        //     .catch((error)=> errorResponse(error))
+        //     .finally(()=>console.log('cleanup'))
     }
 
     function successfulResponse (response)
@@ -43,7 +43,7 @@ export default function WelcomeComponent()
                 <button className="btn btn-success m-5" onClick={callHelloWorldRestApi}> 
                 Call REST API</button>
             </div>
-            <div className="text-info" >{message}</div>
+            {/* <div className="text-info" >{message}</div> */}
         </div>
     )
 }
