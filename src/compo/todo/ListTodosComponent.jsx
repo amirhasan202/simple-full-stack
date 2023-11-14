@@ -11,16 +11,14 @@ export default function ListTodosComponent()
     const [todos , setTodos] = useState([])
     const [message , setMessage] = useState(null)
     
-  //  const todos = [
-                    // {id:1 , dscription : 'Learn AWS' , done : false , targetDate:targetDate },
-                    // {id:2 , dscription : 'Learn Full Stack Dev' , done : false , targetDate:targetDate},
-                    // {id:3 , dscription : 'Learn DevOps' , done : false , targetDate:targetDate}
-  //              ]
-
+    const navigate = useNavigate()
+ 
   useEffect (
     ()=> refreshTodos()
   )
 
+
+  
 
   function refreshTodos()
   {
@@ -30,20 +28,32 @@ export default function ListTodosComponent()
        })
   }
 
+
+
+
   function deleteTodo(id)
   {
     console.log('clicked'+id)
     deleteTodoApi('in28minutes' , id)
-        .then(
-            //1: message
-           ()=> {
+        .then(()=> {
                     setMessage(`Delete of todo with ID : ${id} successfuly Done`)
                     refreshTodos()           
            }
-            //2:update to do
-
         )
   }
+
+
+
+
+  function updateTodo(id)
+  {
+     console.log('Up clicked'+id)
+
+     navigate(`/Todo/${id}`)
+  }
+
+
+
     return (
         <div className="container">
             <h1> Things You Want To Do</h1>
@@ -57,6 +67,7 @@ export default function ListTodosComponent()
                             <th>is Done ?</th>
                             <th>target Date</th>
                             <th>Delete</th>
+                            <th>Update</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,11 +79,17 @@ export default function ListTodosComponent()
                                     <td>{todo.description.toString()}</td>
                                     <td>{todo.done.toString()}</td>
                                     <td>{todo.targetdate.toString()}</td> 
-                                    <th>
+                                    <td>
                                         <button className="btn btn-warning" onClick={ () => deleteTodo(todo.id)}>
                                             Delete
                                         </button>
-                                    </th>
+                                    </td>
+                                    <td>
+                                        <button className="btn btn-success" onClick={ () => updateTodo(todo.id)}>
+                                            Update
+                                        </button>
+                                    </td>
+
                                  </tr>
                             )
                           )               
