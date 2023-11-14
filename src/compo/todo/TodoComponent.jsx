@@ -1,5 +1,5 @@
 import {  useNavigate, useParams } from "react-router-dom"
-import { retrieveTodoApi, updateTodoApi } from "./TodoApiServices"
+import { createTodoApi, retrieveTodoApi, updateTodoApi } from "./TodoApiServices"
 import { useEffect, useState } from "react"
 import { Field,Form, Formik } from "formik"
 
@@ -23,13 +23,17 @@ export default function Todocomponent ()
 
     const navigate = useNavigate()
 
-    function retrieveTodos(){
-        retrieveTodoApi('in28minutes' , id)
-            .then(response => {
-                setDescription(response.data.description)
-                setTargetDate(response.data.targetdate)
-            })
-            .catch(error => console.log(error))
+    function retrieveTodos()
+    {
+        if (id != -1)
+        {
+            retrieveTodoApi('in28minutes' , id)
+                .then(response => {
+                    setDescription(response.data.description)
+                    setTargetDate(response.data.targetdate)
+                })
+                .catch(error => console.log(error))
+        }
     }
 
     function onSubmit (values){
@@ -41,13 +45,26 @@ export default function Todocomponent ()
             targetdate : values.targetdate,
             done : false
         }
-        console.log(todo)
-        updateTodoApi('in28minutes', id ,todo)
-            .then(response => {
-                navigate('/todos')
 
-            })
-            .catch(error => console.log(error))
+        console.log(todo)
+
+        if(id==-1)
+        {
+            createTodoApi('in28minutes', todo)
+                .then(response => {
+                    navigate('/todos')
+                })
+                .catch(error => console.log(error))
+        }
+        else
+        {
+            updateTodoApi('in28minutes', id ,todo)
+                 .then(response => {
+                     navigate('/todos')
+
+                 })
+                .catch(error => console.log(error))
+        }
     }
 
 
