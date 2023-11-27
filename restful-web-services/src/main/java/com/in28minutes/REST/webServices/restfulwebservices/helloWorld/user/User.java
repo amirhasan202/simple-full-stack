@@ -1,12 +1,15 @@
 package com.in28minutes.REST.webServices.restfulwebservices.helloWorld.user;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
@@ -27,6 +30,9 @@ public class User
 	@Past (message ="Birth date should be at past")
 	private LocalDate birthday;
 	
+	@OneToMany(mappedBy = "user")
+	@JsonIgnore
+	private List<Post> post;
 	
 	public User()
 	{
@@ -63,6 +69,14 @@ public class User
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", birthday=" + birthday + "]";
+	}
+
+	public List<Post> getPost() {
+		return post;
+	}
+
+	public void setPost(List<Post> post) {
+		this.post = post;
 	}
 	
 	
